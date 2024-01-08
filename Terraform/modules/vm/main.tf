@@ -46,6 +46,21 @@ resource "azurerm_network_security_rule" "ssh" {
   network_security_group_name = azurerm_network_security_group.main.name
 }
 
+# Règle de sécurité pour le port 80 (HTTP) depuis n'importe quelle source sur la VM
+resource "azurerm_network_security_rule" "NSG_Appli_Rules_HTTP" {
+  name                        = "HTTP_Rule"
+  priority                    = 120
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group
+  network_security_group_name = azurerm_network_security_group.main.name
+}
+
 resource "azurerm_virtual_machine" "main" {
   name                          = "${var.resource_group}-vm"
   location                      = var.location
