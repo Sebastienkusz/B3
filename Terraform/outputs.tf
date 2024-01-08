@@ -5,3 +5,7 @@ output "admin_ssh" {
 # output "users_ssh" {
 #   value = [for user_name, user_value in local.users : "${user_name} : ssh -i ~/.ssh/${user_value.private_key} ${user_name}@${module.vm.vm_fqdn} "]
 # }
+
+output "image_id" {
+  value = data.azurerm_image.search.id
+}
