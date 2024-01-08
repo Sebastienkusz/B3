@@ -34,25 +34,25 @@ variable "os_disk_managed_disk_type" {
   description = "(Optional) Specifies the type of Managed Disk which should be created. Possible values are Standard_LRS, StandardSSD_LRS or Premium_LRS"
 }
 
-variable "image_publisher" {
-  type        = string
-  description = "(Optional) Specifies the publisher of the image used to create the virtual machine. Changing this forces a new resource to be created."
-}
+# variable "image_publisher" {
+#   type        = string
+#   description = "(Optional) Specifies the publisher of the image used to create the virtual machine. Changing this forces a new resource to be created."
+# }
 
-variable "image_offer" {
-  type        = string
-  description = "(Optional) Specifies the offer of the image used to create the virtual machine. Changing this forces a new resource to be created"
-}
+# variable "image_offer" {
+#   type        = string
+#   description = "(Optional) Specifies the offer of the image used to create the virtual machine. Changing this forces a new resource to be created"
+# }
 
-variable "image_sku" {
-  type        = string
-  description = "(Optional) Specifies the SKU of the image used to create the virtual machine. Changing this forces a new resource to be created"
-}
+# variable "image_sku" {
+#   type        = string
+#   description = "(Optional) Specifies the SKU of the image used to create the virtual machine. Changing this forces a new resource to be created"
+# }
 
-variable "image_version" {
-  type        = string
-  description = "(Optional) Specifies the version of the image used to create the virtual machine. Changing this forces a new resource to be created"
-}
+# variable "image_version" {
+#   type        = string
+#   description = "(Optional) Specifies the version of the image used to create the virtual machine. Changing this forces a new resource to be created"
+# }
 
 variable "admin_username" {
   type        = string

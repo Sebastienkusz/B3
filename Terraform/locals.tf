@@ -23,10 +23,10 @@ locals {
   os_disk_create_option     = "FromImage"
   os_disk_managed_disk_type = "Standard_LRS"
 
-  image_publisher = "Canonical"
-  image_offer     = "0001-com-ubuntu-server-jammy"
-  image_sku       = "22_04-lts-gen2"
-  image_version   = "latest"
+  # image_publisher = "Canonical"
+  # image_offer     = "0001-com-ubuntu-server-jammy"
+  # image_sku       = "22_04-lts-gen2"
+  # image_version   = "latest"
 
   ip_simplon = "82.126.234.200"
 

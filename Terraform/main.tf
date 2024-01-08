@@ -6,6 +6,11 @@ module "vnet" {
   subnet_1       = local.subnets_europe
 }
 
+data "azurerm_image" "search" {
+  name                = "tonypacker"
+  resource_group_name = local.resource_group_name
+}
+
 module "vm" {
   source         = "./modules/vm"
   resource_group = local.resource_group_name
@@ -16,10 +21,10 @@ module "vm" {
   os_disk_create_option     = local.os_disk_create_option
   os_disk_managed_disk_type = local.os_disk_managed_disk_type
 
-  image_publisher = local.image_publisher
-  image_offer     = local.image_offer
-  image_sku       = local.image_sku
-  image_version   = local.image_version
+#   image_publisher = local.image_publisher
+#   image_offer     = local.image_offer
+#   image_sku       = local.image_sku
+#   image_version   = local.image_version
 
   admin_username = local.admin_username
   path           = local.path

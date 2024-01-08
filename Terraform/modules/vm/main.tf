@@ -61,6 +61,11 @@ resource "azurerm_network_security_rule" "NSG_Appli_Rules_HTTP" {
   network_security_group_name = azurerm_network_security_group.main.name
 }
 
+data "azurerm_image" "search" {
+  name                = "tonypacker"
+  resource_group_name = var.resource_group
+}
+
 resource "azurerm_virtual_machine" "main" {
   name                          = "${var.resource_group}-vm"
   location                      = var.location
@@ -68,6 +73,7 @@ resource "azurerm_virtual_machine" "main" {
   network_interface_ids         = [azurerm_network_interface.main.id]
   vm_size                       = var.vm_size
   delete_os_disk_on_termination = true
+  
 
   storage_os_disk {
     name              = "${var.resource_group}-vm"
@@ -76,11 +82,12 @@ resource "azurerm_virtual_machine" "main" {
     managed_disk_type = var.os_disk_managed_disk_type
   }
 
-  storage_image_reference {
-    publisher = var.image_publisher
-    offer     = var.image_offer
-    sku       = var.image_sku
-    version   = var.image_version
+ storage_image_reference {
+    id        = data.azurerm_image.search.id
+  #   publisher = var.image_publisher
+  #   offer     = var.image_offer
+  #   sku       = var.image_sku
+  #   version   = var.image_version
   }
 
   os_profile {
