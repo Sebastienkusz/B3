@@ -38,6 +38,6 @@ Cette dernière commande, "Packer build", procédera à la création de l'image 
 
 Nous pourrons utiliser cette image à l'avenir pour des déploiements personnalisés en spécifiant la ressource dans notre code terraform.
 
-#### "Merci qui, merci Tony !"
+#### "Merci qui? merci Tony!"
 <img src="https://i.pinimg.com/736x/52/1f/d4/521fd4024a40c107f68ce64e128fef02.jpg" alt="">
 
