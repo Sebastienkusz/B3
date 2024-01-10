@@ -12,8 +12,7 @@ source "amazon-ebs" "ubuntu" {
   ami_name                    = "tony-packer-linux-aws"
   instance_type               = "t3.micro"
   region                      = "eu-north-1"
-  access_key                  = "AKIAZI2LCKOEHKJYURNM"
-  secret_key                  = "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"
+  profile                     = "simplon"
   associate_public_ip_address = true
   force_deregister            = true
   force_delete_snapshot       = true
