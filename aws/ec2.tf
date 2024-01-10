@@ -19,7 +19,7 @@ resource "aws_key_pair" "ec2" {
 
 # Create a security group to allow SSH and HTTP(s) traffic
 locals {
-  group_ip_list = ["62.34.36.24/32"] # Change this to your own IP
+  group_ip_list = ["62.34.36.24/32", "83.195.211.184/32"] # Change this to your own IP
 }
 
 resource "aws_security_group" "ec2" {
@@ -60,13 +60,13 @@ data "aws_ami" "ubuntu" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    values = ["tony-packer-linux-aws"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["099720109477"]
+  owners = ["637423211400"]
 }
 
 resource "aws_instance" "tony" {

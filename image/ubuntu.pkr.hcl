@@ -36,8 +36,12 @@ build {
   }
 
   provisioner "file" {
-  source = "./index.html"
-  destination = "./index.html"
+    source      = "./index.html"
+    destination = "./index.html"
+  }
+
+  provisioner "shell" {
+    inline = ["sudo rm /var/www/html/index.nginx-debian.html", "sudo mv ./index.html /var/www/html/index.nginx-debian.html"]
   }
 
 }

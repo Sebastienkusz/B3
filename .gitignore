@@ -45,3 +45,5 @@ pyvenv.cfg
 
 # Include tfstate for remote state storage
 !**/.terraform/terraform.tfstate
+
+*.zip
