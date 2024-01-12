@@ -60,11 +60,15 @@ data "aws_ami" "ubuntu" {
   most_recent = true
   filter {
     name   = "name"
-    values = ["tony-packer-linux-aws"]
+    values = ["tony-packer-*"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
+  }
+  filter {
+    name   = "OS"
+    values = ["${local.OS}"]
   }
   owners = ["637423211400"]
 }

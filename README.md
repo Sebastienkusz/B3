@@ -41,3 +41,5 @@ Nous pourrons utiliser cette image à l'avenir pour des déploiements personnali
 #### "Merci qui? merci Tony!"
 <img src="https://i.pinimg.com/736x/52/1f/d4/521fd4024a40c107f68ce64e128fef02.jpg" alt="">
 
+
+"if [ $(getent group admin) ]; then sudo usermod -aG sudo '${local.clientUser}'",
