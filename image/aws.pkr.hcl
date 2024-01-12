@@ -1,6 +1,6 @@
 locals {
   clientUser = "admin"
-  timestamp = formatdate("DD-MMM-YYYY-hh-mm", timestamp())
+  timestamp  = formatdate("DD-MMM-YYYY-hh-mm", timestamp())
 }
 
 variable "ami_prefix" {
@@ -9,19 +9,19 @@ variable "ami_prefix" {
 }
 
 variable "ami_os_name" {
-  type    = string
+  type = string
 }
 
 variable "ami_os_owner" {
-  type    = string
+  type = string
 }
 
 variable "ami_os_kernel" {
-  type    = string
+  type = string
 }
 
 variable "username" {
-  type    = string
+  type = string
 }
 
 packer {
@@ -72,8 +72,14 @@ build {
 
   provisioner "shell" {
     execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
-    inline          = ["export DEBIAN_FRONTEND=noninteractive", "apt-get update", "apt-get upgrade -y", "apt-get update", "apt-get -y install apache2 git unzip jq", "apt-get -y install certbot python3-certbot-apache"] 
-    inline_shebang  = "/bin/sh -xe"
+    inline = [
+      "export DEBIAN_FRONTEND=noninteractive",
+      "/usr/bin/cloud-init status --wait",
+      "apt-get update",
+      "apt-get upgrade -y",
+      "apt-get -y install apache2 git unzip jq certbot python3-certbot-apache"
+    ]
+    inline_shebang = "/bin/sh -xe"
   }
 
   provisioner "file" {
@@ -82,20 +88,29 @@ build {
   }
 
   provisioner "shell" {
-    inline = ["sudo rm /var/www/html/index.html", "sudo mv /tmp/index.html /var/www/html/index.html"]
+    inline = [
+      "sudo rm /var/www/html/index.html",
+      "sudo mv /tmp/index.html /var/www/html/index.html"
+    ]
   }
 
-  # provisioner "shell" {
-  #   inline          = [
-  #     "if [ $(id -u admin) ]; then sudo usermod -aG sudo '${local.clientUser}' else sudo adduser --gecos '' --disabled-password '${local.clientUser}' --group sudo fi",
-  #     "KeyVarTmp=$(cat ../aws/ssh/technocorp.pub)", 
-  #     "sudo mkdir '/home/'${local.clientUser}'/.ssh'",
-  #     "echo $KeyVarTmp >> 'home/'${local.clientUser}'/.ssh/authorized_keys'",
-  #     "sudo chmod 640 /home/${local.clientUser}/.ssh/authorized_keys",
-  #     "sudo chmod 700 /home/${local.clientUser}/.ssh/",
-  #     "sudo chown -R ${local.clientUser}:${local.clientUser} /home/${local.clientUser}/.ssh/",
-  #     "echo \"${local.clientUser} ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers"
-  #     ]
-  # }
+  provisioner "file" {
+    source      = "./../aws/ssh/technocorp.pub"
+    destination = "/tmp/technocorp.pub"
+  }
+
+  provisioner "shell" {
+    inline          = [
+      "if id -u ${local.clientUser} > /dev/null 2>&1 ; then sudo usermod -aG sudo ${local.clientUser}; else sudo adduser --gecos '' --disabled-password ${local.clientUser} --group sudo; fi",
+      "KeyVarTmp=$(cat /tmp/technocorp.pub)", 
+      "sudo mkdir -p '/home/'${local.clientUser}'/.ssh'",
+      "touch '/home/'${local.clientUser}'/.ssh/authorized_keys'",
+      "echo $KeyVarTmp >> '/home/'${local.clientUser}'/.ssh/authorized_keys'",
+      "sudo chmod 640 '/home/'${local.clientUser}'/.ssh/authorized_keys'",
+      "sudo chmod 700 '/home/'${local.clientUser}'/.ssh/'",
+      "sudo chown -R '${local.clientUser}': '/home/'${local.clientUser}'/.ssh/'",
+      "echo -e \"\\n${local.clientUser} ALL=(ALL) NOPASSWD:ALL\" | sudo tee -a /etc/sudoers.d/'${local.clientUser}'-user"
+      ]
+  }
 
 }
