@@ -5,5 +5,5 @@ output "website" {
 
 output "ssh" {
   description = "ssh command to connect the EC2 instance"
-  value       = "ssh -i ./${local_file.private_ssh_key.filename} ubuntu@${aws_instance.tony.public_ip}"
+  value       = "ssh -i ./${local_file.private_ssh_key.filename} ${local.AdminUser}@${aws_instance.tony.public_ip}"
 }

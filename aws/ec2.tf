@@ -13,7 +13,7 @@ resource "local_file" "private_ssh_key" {
 
 # Upload SSH key to AWS
 resource "aws_key_pair" "ec2" {
-  key_name   = local.group
+  key_name   = "${local.group}-${local.OS}"
   public_key = tls_private_key.ssh_key.public_key_openssh
 }
 
@@ -67,7 +67,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
   filter {
-    name   = "OS"
+    name   = "tag:OS"
     values = ["${local.OS}"]
   }
   owners = ["637423211400"]
